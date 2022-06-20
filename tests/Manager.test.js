@@ -35,24 +35,32 @@ describe("Managers", () => {
 
 //  METHODS
     describe("Object includes the necessary methods", () => {
-        it("should return the name", () =>{
-            const manager = new Manager("exampleName", "exampleId", "exampleEmail", "exampleOfficeNumber");
-            expect(manager.getName()).toBe("exampleName");
-        });
-
-        it("should return the id", () =>{
-            const manager = new Manager("exampleName", "exampleId", "exampleEmail", "exampleOfficeNumber");
-            expect(manager.getId()).toBe("exampleId");
-        });
+        describe("getName", () => {
+            it("should return the name", () =>{
+                const manager = new Manager("exampleName", "exampleId", "exampleEmail", "exampleOfficeNumber");
+                expect(manager.getName()).toBe("exampleName");
+            });
+        })
         
-        it("should return the email", () =>{
-            const manager = new Manager("exampleName", "exampleId", "exampleEmail", "exampleOfficeNumber");
-            expect(manager.getEmail()).toBe("exampleEmail");
-        });
+        describe("getId", () => {
+            it("should return the ID", () =>{
+                const manager = new Manager("exampleName", "exampleId", "exampleEmail", "exampleOfficeNumber");
+                expect(manager.getId()).toBe("exampleId");
+            });
+        })
 
-        it("should return the role", () =>{
-            const manager = new Manager("exampleName", "exampleId", "exampleEmail", "exampleOfficeNumber");
-            expect(manager.getRole()).toBe("Manager");
-        });
+        describe("getEmail", () => {
+            it("should return the Email", () =>{
+                const manager = new Manager("exampleName", "exampleId", "exampleEmail", "exampleOfficeNumber");
+                expect(manager.getEmail()).toBe("exampleEmail");
+            });
+        })
+        
+        describe("getRole", () => {
+            it("should return the role", () =>{
+                const manager = new Manager("exampleName", "exampleId", "exampleEmail", "exampleOfficeNumber");
+                expect(manager.getRole()).toBe("Manager");
+            });
+        })
     })
 })

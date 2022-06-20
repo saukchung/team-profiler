@@ -30,24 +30,35 @@ describe("Employees", () => {
 
 //  METHODS
     describe("Object includes the necessary methods", () => {
-        it("should return the name", () =>{
-            const employee = new Employee("exampleName", "exampleId", "exampleEmail");
-            expect(employee.getName()).toBe("exampleName");
-        });
-
-        it("should return the id", () =>{
-            const employee = new Employee("exampleName", "exampleId", "exampleEmail");
-            expect(employee.getId()).toBe("exampleId");
-        });
+        describe("getName", () => {
+            it("should return the name", () =>{
+                const employee = new Employee("exampleName", "exampleId", "exampleEmail");
+                expect(employee.getName()).toBe("exampleName");
+            });
+        })
         
-        it("should return the email", () =>{
-            const employee = new Employee("exampleName", "exampleId", "exampleEmail");
-            expect(employee.getEmail()).toBe("exampleEmail");
-        });
 
-        it("should return the role", () =>{
-            const employee = new Employee("exampleName", "exampleId", "exampleEmail");
-            expect(employee.getRole()).toBe("Employee");
-        });
+        describe("getId", () => {
+            it("should return the id", () =>{
+                const employee = new Employee("exampleName", "exampleId", "exampleEmail");
+                expect(employee.getId()).toBe("exampleId");
+            });
+        })
+        
+        describe("getEmail", () => {
+            it("should return the email", () =>{
+                const employee = new Employee("exampleName", "exampleId", "exampleEmail");
+                expect(employee.getEmail()).toBe("exampleEmail");
+            });
+        })
+        
+
+        describe("getRole", () => {
+            it("should return the role", () =>{
+                const employee = new Employee("exampleName", "exampleId", "exampleEmail");
+                expect(employee.getRole()).toBe("Employee");
+            });
+        })
+        
     })
 })
