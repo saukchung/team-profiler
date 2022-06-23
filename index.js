@@ -63,14 +63,13 @@ function generateHtml(employeeList) {
   `
 } 
 
-function init() {
-  prompt(questions).then(ans => {
-    if (!ans.newEmployee) return fs.writeFile("./dist/index.html", generateHtml(positions), () => {});
-    if (ans.role === "Manager") positions.manager.push(new Manager(ans.employeeName, ans.employeeId, ans.employeeEmail, ans.managerOfficeNumber));
-    if (ans.role === "Intern") positions.intern.push(new Intern(ans.employeeName, ans.employeeId, ans.employeeEmail, ans.internSchool));
-    if (ans.role === "Engineer") positions.engineer.push(new Engineer(ans.employeeName, ans.employeeId, ans.employeeEmail, ans.engineerGithub));
-    init();
-  })
+const init = async () => {
+  ans = await prompt(questions);
+  if (!ans.newEmployee) return fs.writeFile("./dist/index.html", generateHtml(positions), () => {});
+  if (ans.role === "Manager") positions.manager.push(new Manager(ans.employeeName, ans.employeeId, ans.employeeEmail, ans.managerOfficeNumber));
+  if (ans.role === "Intern") positions.intern.push(new Intern(ans.employeeName, ans.employeeId, ans.employeeEmail, ans.internSchool));
+  if (ans.role === "Engineer") positions.engineer.push(new Engineer(ans.employeeName, ans.employeeId, ans.employeeEmail, ans.engineerGithub));
+  init();
 };
 
 
