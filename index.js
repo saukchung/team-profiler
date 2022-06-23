@@ -1,99 +1,77 @@
-const inquirer = require("inquirer");
+const { prompt } = require("inquirer");
 const fs = require("fs");
 const { inherits } = require("util");
+const setupHtml = require("./src/templateMaker.js");
+const positions = {manager: [], engineer: [], intern: []};
+const { questions, Manager, Engineer, Intern } = require("./lib");
 
-const managerQues = [
-    //Manager Questions
-    {
-      type: "input",
-      name: "managerName",
-      message: `What is the name of the team's manager?
-      `,
-    },
+const generateCard = (employees) => {
+  let cards = "";
+  for (employee of employees.manager) {
+    cards += `
+<div class="manager">
+    <h4>${employee.name}</h4>
+    <h5>Manager</h5>
+    <p>ID: ${employee.id}</p>
+    <p>Email: ${employee.email}</p>
+    <p>Office Number: ${employee.officeNumber}</p>
+</div>`
+  };
+  for (employee of employees.engineer) {
+    cards += `
+<div class="engineer">
+    <h4>${employee.name}</h4>
+    <h5>Engineer</h5>
+    <p>ID: ${employee.id}</p>
+    <p>Email: ${employee.email}</p>
+    <p>GitHub: ${employee.github}</p>
+</div>`
+  };
+  for (employee of employees.intern) {
+    cards += `
+<div class="intern">
+    <h4>${employee.name}</h4>
+    <h5>Intern</h5>
+    <p>ID: ${employee.id}</p>
+    <p>Email: ${employee.email}</p>
+    <p>Associated School: ${employee.school}</p>
+</div>
+`
+  };
+  return cards
+};
 
-    {
-      type: "input",
-      name: "managerId",
-      message: `What is the team manager's employee ID?
-      `,
-    },
 
-    {
-      type: "input",
-      name: "managerEmail",
-      message: `What is the team manager's Email address?
-      `,
-    },
-
-    {
-      type: "input",
-      name: "managerOfficeNumber",
-      message: `What is the team manager's Office #?
-      `,
-    },
-];
-
-
-//     // Recruit Choice
-//     {
-//       type: "loop",
-//       name: "employees",
-//       message: `Which of these roles would you like to add?
-//       `,
-//       choices: ["Engineer", "Intern", "Finish Recruiting"],
-//       loop: true
-//     },
-    
-//     // Engineer Questions
-//     {
-//       type: "input",
-//       name: "engineerName",
-//       message: `What is the name of the engineer?
-//       `,
-//       when: (answers) => answers.recruit === "Engineer"
-//     },
-    
-//     {
-//       type: "input",
-//       name: "engingeerId",
-//       message: `What is the engineer's employee ID?
-//       `,
-//       when: (answers) => answers.recruit === "Engineer"
-//     },
-
-//     {
-//       type: "input",
-//       name: "engineerEmail",
-//       message: `What is the engineer's Email address?
-//       `,
-//       when: (answers) => answers.recruit === "Engineer"
-//     },
-
-//     {
-//       type: "input",
-//       name: "engineerGithub",
-//       message: `What is the engineer's GitHub ID?
-//       `,
-//       when: (answers) => answers.recruit === "Engineer"
-//     },
-// ];
-function writeHtml(data) {
-    const content = `<h1>${data.managerName}</h1>`;
-    fs.appendFile("./src/body", content, function (err) {
-        if (err) throw err;
-        console.log('Saved manager info!');
-    });
-}
+function generateHtml(employeeList) {
+  const cardsHtml = generateCard(employeeList);
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team profile</title>
+    <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+    <header>TEAM PROFILE</header>
+    <main>
+    ${cardsHtml}
+    </main>
+</body>
+</html>
+  `
+} 
 
 function init() {
-    inquirer
-        .prompt(managerQues)
-        .then((response) => {
-          writeHtml(response);
-        })
-        // .then((response) => {
-        //     writeHtml(response);
-        // })
-}
+  prompt(questions).then(ans => {
+    if (!ans.newEmployee) return fs.writeFile("./dist/index.html", generateHtml(positions), () => {});
+    if (ans.role === "Manager") positions.manager.push(new Manager(ans.employeeName, ans.employeeId, ans.employeeEmail, ans.managerOfficeNumber));
+    if (ans.role === "Intern") positions.intern.push(new Intern(ans.employeeName, ans.employeeId, ans.employeeEmail, ans.internSchool));
+    if (ans.role === "Engineer") positions.engineer.push(new Engineer(ans.employeeName, ans.employeeId, ans.employeeEmail, ans.engineerGithub));
+    init();
+  })
+};
+
 
 init();
