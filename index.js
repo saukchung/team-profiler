@@ -1,6 +1,5 @@
 const { prompt } = require("inquirer");
 const fs = require("fs");
-const { inherits } = require("util");
 const setupHtml = require("./src/templateMaker.js");
 const positions = {manager: [], engineer: [], intern: []};
 const { questions, Manager, Engineer, Intern } = require("./lib");
@@ -13,7 +12,7 @@ const generateCard = (employees) => {
     <h4>${employee.name}</h4>
     <h5>Manager</h5>
     <p>ID: ${employee.id}</p>
-    <p>Email: ${employee.email}</p>
+    <p>Email: <a href="mailto:${employee.email}">${employee.email}</a></p>
     <p>Office Number: ${employee.officeNumber}</p>
 </div>`
   };
@@ -23,8 +22,8 @@ const generateCard = (employees) => {
     <h4>${employee.name}</h4>
     <h5>Engineer</h5>
     <p>ID: ${employee.id}</p>
-    <p>Email: ${employee.email}</p>
-    <p>GitHub: ${employee.github}</p>
+    <p>Email: <a href="mailto:${employee.email}">${employee.email}</a></p>
+    <p>GitHub: <a href="https://github.com/${employee.github}">${employee.name}'s GitHub</a></p>
 </div>`
   };
   for (employee of employees.intern) {
@@ -33,7 +32,7 @@ const generateCard = (employees) => {
     <h4>${employee.name}</h4>
     <h5>Intern</h5>
     <p>ID: ${employee.id}</p>
-    <p>Email: ${employee.email}</p>
+    <p>Email: <a href="mailto:${employee.email}">${employee.email}</a></p>
     <p>Associated School: ${employee.school}</p>
 </div>
 `
